@@ -1,14 +1,18 @@
 const cityForm = document.querySelector("form");
 const card = document.querySelector("#card");
 const details = document.querySelector("#details");
+const time = document.querySelector("#time");
+const icon = document.querySelector("#icon img")
 
 const updateUI = (data) => {
 
-    const cityDetails = data.cityDetails;
-    const weather = data.weather;
+    //destructure properties
+    const {cityDetails, weather} = data;
 
     //remove display: none; class
-    card.classList.remove("hidden");
+    if(card.classList.contains("hidden")){
+        card.classList.remove("hidden");
+    }
 
     //update details template
     details.innerHTML = `
@@ -25,7 +29,7 @@ const updateCity = async (city) => {
     const weather = await getWeather(cityDetails.Key);
 
     //returns object (shorthand notation)
-    return {cityDetails,weather};
+    return {cityDetails, weather};
 }
 
 cityForm.addEventListener("submit", item => {
