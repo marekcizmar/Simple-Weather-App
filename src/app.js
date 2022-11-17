@@ -1,15 +1,31 @@
 const cityForm = document.querySelector("form");
+const card = document.querySelector("#card");
+const details = document.querySelector("#details");
+
+const updateUI = (data) => {
+
+    const cityDetails = data.cityDetails;
+    const weather = data.weather;
+
+    //remove display: none; class
+    card.classList.remove("hidden");
+
+    //update details template
+    details.innerHTML = `
+        <h1 class="text-2xl">${cityDetails.EnglishName}</h1>
+        <h2 class="mt-3 text-slate-400">${weather.WeatherText}</h2>
+        <h3 class="text-6xl mt-8 font-light tracking-widest">${weather.Temperature.Metric.Value} &deg;C</h3>
+    `;
+
+};
 
 const updateCity = async (city) => {
 
     const cityDetails = await getCity(city);
     const weather = await getWeather(cityDetails.Key);
 
-    return {
-        cityDetails: cityDetails,
-        weather: weather
-    };
-
+    //returns object (shorthand notation)
+    return {cityDetails,weather};
 }
 
 cityForm.addEventListener("submit", item => {
@@ -22,6 +38,6 @@ cityForm.addEventListener("submit", item => {
 
     //update the UI with new city
     updateCity(city)
-        .then(data => console.log(data))
+        .then(data => updateUI(data))
         .catch(error => console.log(error));
 })
