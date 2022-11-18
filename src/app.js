@@ -21,6 +21,19 @@ const updateUI = (data) => {
         <h3 class="text-6xl mt-8 font-light tracking-widest">${weather.Temperature.Metric.Value} &deg;C</h3>
     `;
 
+    //update night/day icon, images
+    const iconSrc = `img/icons/${weather.WeatherIcon}.svg`;
+    icon.setAttribute("src", iconSrc);
+
+    let timeSrc = null;
+    if(weather.IsDayTime){
+        timeSrc = "img/day.svg"
+    }else{
+        timeSrc = "img/night.svg"
+    }
+    time.setAttribute("src", timeSrc);
+
+
 };
 
 const updateCity = async (city) => {
